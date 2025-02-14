@@ -2,7 +2,7 @@ import os
 from ClasePelicula import Pelicula
 
 class CatalogoPelicula:
-    def init(self, nombre, ruta_archivo):
+    def __init__(self, nombre, ruta_archivo):
         self.nombre = nombre
         self.ruta_archivo = ruta_archivo
         self.peliculas = []

@@ -1,5 +1,5 @@
 class Pelicula:
-    def init(self, id, titulo, duracion, genero):
+    def __init__(self, id, titulo, duracion, genero):
         self.__id = id  
         self._titulo = titulo
         self._duracion = duracion
@@ -33,7 +33,7 @@ class Pelicula:
     def genero(self, generoreal):
         self._genero = generoreal
 
-    def str(self):
+    def __str__(self):
         return (
             f"ID: {self.id} | " 
             f"Título: {self.titulo} | "
