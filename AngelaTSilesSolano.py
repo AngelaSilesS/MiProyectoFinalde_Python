@@ -1,38 +1,39 @@
-import os
-from ClasePelicula import Pelicula
+import os             # Importamos el módulo os para trabajar con archivos y rutas.
+from ClasePelicula import Pelicula          # Importamos la clase Pelicula desde el archivo ClasePelicula.py. 
 
-class CatalogoPelicula:
-    def __init__(self, nombre, ruta_archivo):
-        self.nombre = nombre
-        self.ruta_archivo = ruta_archivo
-        self.peliculas = []
-        self.cargar_peliculas()
+class CatalogoPelicula:    # Definimos la clase CatalogoPelicula que gestiona una lista de películas y sus operaciones.
 
-    def agregar(self, pelicula):  
-     if self.buscar_pelicula(pelicula.id):  
+    def __init__(self, nombre, ruta_archivo):     # Constructor de la clase: inicializa el nombre del catálogo, la ruta del archivo y carga las películas existentes.
+        self.nombre = nombre        # Nombre del catálogo.
+        self.ruta_archivo = ruta_archivo    # Ruta del archivo donde se guardan las películas.
+        self.peliculas = []               # Lista para almacenar objetos de tipo Pelicula.
+        self.cargar_peliculas()    # Carga las películas desde el archivo al iniciar el catálogo.
+
+    def agregar(self, pelicula):    # Método para agregar una película al catálogo.
+     if self.buscar_pelicula(pelicula.id):    # Si ya existe una película con el mismo ID, no se agrega y retorna el siguiente mensaje.
         print(f"✕  Ya existe una película con el ID {pelicula.id}. No se puede agregar.")
         return
-     self.peliculas.append(pelicula)
-     self.guardar_datos()
+     self.peliculas.append(pelicula)       # Se agrega la película a la lista.
+     self.guardar_datos()               # Se actualiza el archivo con los nuevos datos.
      print(f"Película con ID {pelicula.id} agregada correctamente.")  
 
-    def listar(self): 
+    def listar(self):      # Método para listar todas las películas en el catálogo.
         if not self.peliculas:
-            print("El catálogo está vacío.")
+            print("El catálogo está vacío.")     # Si la lista está vacía, se retorna el siguiente mensaje.
         else:
-            for pelicula in self.peliculas:
+            for pelicula in self.peliculas:       # Se recorren las películas y se imprime.
                 print(pelicula)
 
-    def eliminar(self):  
-        self.peliculas = []
+    def eliminar(self):  # Método para eliminar el catálogo de películas.
+        self.peliculas = []  # Se vacía la lista.
         try:
-            os.remove(self.ruta_archivo)
+            os.remove(self.ruta_archivo)        # Se intenta eliminar el archivo del catálogo e imprime el mensaje.
             print("Catálogo eliminado correctamente.")
-        except FileNotFoundError:
+        except FileNotFoundError:           # Pero si el archivo no existe muestra este otro mensaje.
             print("El archivo no existe.")
 
-    def buscar_pelicula(self, id):  
-        return next((p for p in self.peliculas if p.id == id), None)     
+    def buscar_pelicula(self, id):       # Método para buscar una película por su ID.
+        return next((p for p in self.peliculas if p.id == id), None)     # Retorna la película si existe, de lo contrario 'None'.
 
     def guardar_datos(self): 
         try:
