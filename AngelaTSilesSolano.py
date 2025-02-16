@@ -1,56 +1,57 @@
-import os             # Importamos el módulo os para trabajar con archivos y rutas.
+
+import os             # Importamos el módulo os para que nos elimine un archivo, en este caso el archivo 'txt'.
 from ClasePelicula import Pelicula          # Importamos la clase Pelicula desde el archivo ClasePelicula.py. 
 
 class CatalogoPelicula:    # Definimos la clase CatalogoPelicula que gestiona una lista de películas y sus operaciones.
 
     def __init__(self, nombre, ruta_archivo):     # Constructor de la clase: inicializa el nombre del catálogo, la ruta del archivo y carga las películas existentes.
         self.nombre = nombre        # Nombre del catálogo.
-        self.ruta_archivo = ruta_archivo    # Ruta del archivo donde se guardan las películas.
-        self.peliculas = []               # Lista para almacenar objetos de tipo Pelicula.
+        self.ruta_archivo = ruta_archivo    # Ruta del archivo donde se guardan las películas ('txt').
+        self.peliculas = []               # Lista para almacenar objetos de Pelicula.
         self.cargar_peliculas()    # Carga las películas desde el archivo al iniciar el catálogo.
 
     def agregar(self, pelicula):    # Método para agregar una película al catálogo.
-     if self.buscar_pelicula(pelicula.id):    # Si ya existe una película con el mismo ID, no se agrega y retorna el siguiente mensaje.
+     if self.buscar_pelicula(pelicula.id):                      # Si ya existe una película con el mismo ID, no se agrega y retorna el mensaje:
         print(f"✕  Ya existe una película con el ID {pelicula.id}. No se puede agregar.")
         return
      self.peliculas.append(pelicula)       # Se agrega la película a la lista.
      self.guardar_datos()               # Se actualiza el archivo con los nuevos datos.
      print(f"Película con ID {pelicula.id} agregada correctamente.")  
 
-    def listar(self):      # Método para listar todas las películas en el catálogo.
-        if not self.peliculas:
-            print("El catálogo está vacío.")     # Si la lista está vacía, se retorna el siguiente mensaje.
+    def listar(self):      # Método para 'listar' todas las películas en el catálogo.
+        if not self.peliculas:             # Si la lista está vacía, se retorna el mensaje:
+            print("El catálogo está vacío.")     
         else:
-            for pelicula in self.peliculas:       # Se recorren las películas y se muestran al usuario.
+            for pelicula in self.peliculas:      # Se recorren las películas y se muestran al usuario.
                 print(pelicula)
 
-    def eliminar(self):  # Método para eliminar el catálogo de películas.
-        self.peliculas = []  # Se vacía la lista.
+    def eliminar(self):      # Método para eliminar el catálogo de películas.
+        self.peliculas = []  # Se vacía la lista de películas.
         try:
-            os.remove(self.ruta_archivo)        # Se intenta eliminar el archivo del catálogo e imprime el mensaje.
+            os.remove(self.ruta_archivo)        # Se intenta eliminar el archivo del catálogo e imprime el mensaje:
             print("Catálogo eliminado correctamente.")
-        except FileNotFoundError:           # Pero si el archivo no existe muestra este otro mensaje.
+        except FileNotFoundError:           # Pero si el archivo no existe muestra:
             print("El archivo no existe.")
 
     def buscar_pelicula(self, id):       # Método para buscar una película por su ID.
-        return next((p for p in self.peliculas if p.id == id), None)     # Retorna la película si existe, de lo contrario 'None'.
+        return next((p for p in self.peliculas if p.id == id), None)     # Retorna la película si existe, de lo contrario muestra 'None'.
 
-    def guardar_datos(self):             # Método para guardar los datos del catálogo en un archivo de texto.
+    def guardar_datos(self):             # Método para guardar los datos del catálogo en un archivo 'txt'.
         try:
             with open(self.ruta_archivo, 'w', encoding='utf-8') as f: 
-                for pelicula in self.peliculas:     # Se recorren las películas y se escribe en el archivo.
+                for pelicula in self.peliculas:     # Se recorre las películas y se escribe en el archivo.
                     f.write(f"{pelicula.id},{pelicula.titulo},{pelicula.duracion},{pelicula.genero}\n")
         except Exception as e:             # Manejo de errores en caso de fallo al escribir el archivo.
             print(f"✕  Error al guardar datos: {e}")
 
     def cargar_peliculas(self):         # Método para cargar las películas desde un archivo al iniciar el programa.
         if not os.path.exists(self.ruta_archivo):     # Si el archivo no existe, lo crea vacío.
-            open(self.ruta_archivo, 'w', encoding='utf-8').close()      
+            open(self.ruta_archivo, 'w', encoding='utf-8').close()    # Usado para abrir un archivo y escribir en él, para ser retornado al usuario. 
             return
         try:
             with open(self.ruta_archivo, 'r', encoding='utf-8') as f:     
-                for linea in f:    # Se leen las líneas del archivo.
-                    datos = linea.strip().split(',')
+                for linea in f:            # Se leen las líneas del archivo 'txt'.
+                    datos = linea.strip().split(',')      # Elimina espacios en blanco innecesarios y divide el string en partes usando la coma como separador.
                     if len(datos) == 4:
                         try:
                             id = int(datos[0])  # Se convierte el ID a entero.
@@ -60,11 +61,11 @@ class CatalogoPelicula:    # Definimos la clase CatalogoPelicula que gestiona un
                             self.peliculas.append(Pelicula(id, titulo, duracion, genero))    # Se añade la película a la lista.
                         except ValueError:
                             print(f"✕  Error en los datos: {linea.strip()}")
-        except Exception as e:                                       # Manejo de errores en caso de fallo al leer el archivo.
+        except Exception as e:                                       # Manejo de errores en caso de fallo al leer el archivo, mostrando:
             print(f"✕  Los datos no se pueden cargar: {e}")    
 
 def iniciar_programa():                # Función principal para iniciar el programa.
-    archivo = input("Ingrese el nombre del catálogo de películas: ")       # Se solicita el nombre del archivo o catálogo.
+    archivo = input("Ingrese el nombre del catálogo de películas: ")       # Se solicita el nombre del archivo 'txt' o catálogo.
     if not archivo.endswith(".txt"):       # Si el usuario no agrega ".txt", se coloca automáticamente.
         archivo += ".txt"
 
@@ -73,11 +74,11 @@ def iniciar_programa():                # Función principal para iniciar el prog
 
     else:
        print(f" →  El catálogo {archivo} ya existe.")     # Mensaje por si el archivo ya existía.
-    catalogo = CatalogoPelicula("Mi Catálogo", archivo)  # Se crea una instancia del catálogo.
+    catalogo = CatalogoPelicula("Mi Catálogo", archivo)  
     menu(catalogo)          # Se llama a la función del menú.
 
 def menu(catalogo):        # Función que maneja el menú de opciones del usuario.
-    while True:               
+    while True:               # Bucle.
         print("\nMenú de opciones:")
         print("1 →  Agregar película.")
         print("2 →  Listar películas.")
@@ -85,9 +86,9 @@ def menu(catalogo):        # Función que maneja el menú de opciones del usuari
         print("4 →  Salir.")
         opcion = input("Opción a elegir: ")
 
-        if opcion == "1":              # Opción para agregar una película.
+        if opcion == "1":    # Opción para agregar una película.
             try:
-                print("\n  🔹 Por favor, ingrese:")   # Se solicitan los datos correspondientes.
+                print("\n  🔹 Por favor, ingrese:")   # Se solicitan los datos:
                 id = int(input(" →  ID de la película: "))
                 titulo = input(" →  Título de la película: ")
                 duracion = int(input(" →  Duración (en min): "))
@@ -106,7 +107,7 @@ def menu(catalogo):        # Función que maneja el menú de opciones del usuari
             if confirmar == "s":
                 catalogo.eliminar()
             elif confirmar == "n":
-                menu (catalogo)      # Si la respuesta es 'n', se vuelve al menú.
+                menu (catalogo)      # Si la respuesta es 'n', se le retorna al usuario el menú principal.
             else:
                 print("✕  Ingrese 's' o 'n' para validar la respuesta.")        # Mensaje de error si la entrada no es válida.
 

@@ -7,32 +7,32 @@ class Pelicula:       # Definimos la clase Película, que contiene sus atributos
         self._duracion = duracion   # Atributo protegido (con un solo guión bajo), sugiere no modificarse fuera de la clase.
         self._genero = genero
 
-    @property        # Decorador que convierte este método en un getter para obtener el ID de la película.
+    @property  # Getter: Permite obtener el valor de un atributo privado o protegido de una clase. Se usa cuando no queremos acceder directamente al atributo, sino a través de un método que pueda aplicar validaciones o procesamientos antes de devolverlo.
     def id(self):
-        return self.__id  # Devuelve el valor del ID. (atributo privado)
+        return self.__id        # Devuelve el valor del ID. (atributo privado)
     
-    @property          # Getter para obtener el título de la película.
+    @property         
     def titulo(self):
-        return self._titulo
+        return self._titulo            # Getter para obtener el título de la película.
     
-    @titulo.setter      # Setter para modificar el título de la película.
+    @titulo.setter  # Setter: Permite modificar el valor de un atributo, asegurando que cumpla ciertas condiciones antes de asignarlo. Cuando queremos restringir, validar o transformar datos antes de guardarlos en el atributo.
     def titulo(self, tituloreal):
         self._titulo = tituloreal
 
-    @property              # Getter para obtener la duración de la película.
-    def duracion(self):
+    @property              
+    def duracion(self):         # Getter para obtener la duración de la película.
         return self._duracion
     
-    @duracion.setter           # Setter para modificar la duración de la película.
-    def duracion(self, duracionreal):
+    @duracion.setter           
+    def duracion(self, duracionreal):          # Setter para modificar la duración de la película.
         self._duracion = duracionreal
 
-    @property         # Getter para obtener el género de la película.
-    def genero(self):
+    @property        
+    def genero(self):        # Getter para obtener el género de la película.
         return self._genero
     
-    @genero.setter          # Setter para modificar el género de la película.
-    def genero(self, generoreal):
+    @genero.setter          
+    def genero(self, generoreal):    # Setter para modificar el género de la película.
         self._genero = generoreal
 
     def __str__(self):      # Método __str__, devuelve una representación en cadena del objeto Pelicula.
